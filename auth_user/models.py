@@ -5,11 +5,8 @@ from imagekit import processors
 from imagekit.models import ProcessedImageField
 
 
-class User(User, PermissionsMixin):
-    email = models.EmailField(max_length=100, unique=True)
+class ProfileUser(User, PermissionsMixin):
     email_new = models.EmailField(max_length=70, null=True, blank=True)
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
     middle_name = models.CharField(max_length=50, blank=True)
     phone_number = models.CharField(max_length=15, blank=True)
     avatar = ProcessedImageField(
@@ -20,10 +17,6 @@ class User(User, PermissionsMixin):
         null=True,
         blank=True
     )
-    is_superuser = models.BooleanField(default=False)
-    is_admin = models.BooleanField(default=False)
-    is_staff = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
