@@ -116,7 +116,7 @@ class CarModification(BaseModel):
     generation = models.ForeignKey(CarGeneration, on_delete=models.PROTECT, verbose_name='Поколение')
     horses_power = models.PositiveIntegerField(verbose_name='Лошадиные силы')
     engine_type = models.IntegerField(choices=EngineTypeChoices.choices, verbose_name='Тип двигателя')
-    engine_volume = models.PositiveIntegerField(max_length=20, verbose_name='Обьем двигателя')
+    engine_volume = models.PositiveIntegerField(verbose_name='Обьем двигателя')
     transmission = models.IntegerField(choices=TransmissionChoices.choices, verbose_name='Коробка передач')
     drive_type = models.IntegerField(choices=DriveTypeChoices.choices, verbose_name='Привод')
         
@@ -165,6 +165,22 @@ class Post(BaseModel):
     is_cleared = models.BooleanField(verbose_name='Растаможен')
     color = models.IntegerField(choices=ColorChoices.choices, verbose_name='Цвет')
     price = models.PositiveBigIntegerField(verbose_name='Цена')
+    is_new = models.BooleanField(default=False, verbose_name='Новая')
+    not_move = models.BooleanField(default=False, verbose_name='Не на ходу')
+    to_order = models.BooleanField(default=False, verbose_name='На заказ')
+    
+    class Meta:
+        verbose_name = 'Обьявление'
+        verbose_name_plural = 'Обьвления'
+        
+    def __str__(self) -> str:
+        return f'{self.author.email} {self.car}' 
+    
+    
+class PostImageFile(BaseModel):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='files')
+    file = models.ForeignKey(File, on_delete=models.CASCADE, related_name='post_files')
+    
     
     
     
